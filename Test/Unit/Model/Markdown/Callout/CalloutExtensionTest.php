@@ -14,6 +14,7 @@ use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
 use League\CommonMark\MarkdownConverter;
 use Magebit\Documentation\Model\Markdown\Callout\CalloutExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CalloutExtensionTest extends TestCase
@@ -32,7 +33,7 @@ class CalloutExtensionTest extends TestCase
     /**
      * @return array<string,array{string,string,string}>
      */
-    public function typeProvider(): array
+    public static function typeProvider(): array
     {
         return [
             'tip' => ['TIP', '_tip', 'Tip'],
@@ -49,6 +50,7 @@ class CalloutExtensionTest extends TestCase
      * @param string $class
      * @param string $title
      */
+    #[DataProvider('typeProvider')]
     public function testKnowsEveryGithubCalloutType(string $marker, string $class, string $title): void
     {
         $html = $this->convert("> [!$marker]\n> Body");

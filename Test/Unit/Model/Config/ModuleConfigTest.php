@@ -15,6 +15,7 @@ use Magebit\Documentation\Model\Config\Source\HighlightLanguage;
 use Magebit\Documentation\Model\Config\Source\HighlightTheme;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class ModuleConfigTest extends TestCase
@@ -68,6 +69,7 @@ class ModuleConfigTest extends TestCase
      * @dataProvider unusableThemeProvider
      * @param mixed $stored
      */
+    #[DataProvider('unusableThemeProvider')]
     public function testHighlightThemeFallsBackToGithub(mixed $stored): void
     {
         $this->scopeConfig->method('getValue')->willReturn($stored);
@@ -93,6 +95,7 @@ class ModuleConfigTest extends TestCase
      * @dataProvider searchFlagProvider
      * @param bool $stored
      */
+    #[DataProvider('searchFlagProvider')]
     public function testSearchEnabledFollowsTheStoredFlag(bool $stored): void
     {
         $this->scopeConfig->expects($this->once())
@@ -153,6 +156,7 @@ class ModuleConfigTest extends TestCase
      * @dataProvider emptyLanguagesProvider
      * @param mixed $stored
      */
+    #[DataProvider('emptyLanguagesProvider')]
     public function testExtraLanguagesIsEmptyWhenNothingIsSelected(mixed $stored): void
     {
         $this->scopeConfig->method('getValue')->willReturn($stored);

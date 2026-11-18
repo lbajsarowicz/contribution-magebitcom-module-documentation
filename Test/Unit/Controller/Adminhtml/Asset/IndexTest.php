@@ -22,6 +22,7 @@ use Magento\Framework\Controller\Result\Raw;
 use Magento\Framework\Controller\Result\RawFactory;
 use Magento\Framework\Exception\FileSystemException;
 use Magento\Framework\Filesystem\Driver\File as FileDriver;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
@@ -81,6 +82,7 @@ class IndexTest extends TestCase
      * @return void
      * @dataProvider unusablePathProvider
      */
+    #[DataProvider('unusablePathProvider')]
     public function testReturns404ForAPathThatNamesNoFile(string $path): void
     {
         $tree = $this->createMock(DocumentationTreeInterface::class);
@@ -98,7 +100,7 @@ class IndexTest extends TestCase
     /**
      * @return array<string, array{string}>
      */
-    public function unusablePathProvider(): array
+    public static function unusablePathProvider(): array
     {
         return [
             'empty path' => [''],
@@ -111,6 +113,7 @@ class IndexTest extends TestCase
      * @return void
      * @dataProvider missingCoordinateProvider
      */
+    #[DataProvider('missingCoordinateProvider')]
     public function testReturns404WhenAModuleOrSectionIsMissing(array $params): void
     {
         $tree = $this->createMock(DocumentationTreeInterface::class);
@@ -124,7 +127,7 @@ class IndexTest extends TestCase
     /**
      * @return array<string, array{array<string, string>}>
      */
-    public function missingCoordinateProvider(): array
+    public static function missingCoordinateProvider(): array
     {
         return [
             'no module' => [['module' => '', 'section' => 'Guide', 'path' => 'diagram.png']],
@@ -197,6 +200,7 @@ class IndexTest extends TestCase
      * @return void
      * @dataProvider mimeTypeProvider
      */
+    #[DataProvider('mimeTypeProvider')]
     public function testSendsTheMappedMimeTypeNotOneDerivedFromTheFile(string $path, string $expected): void
     {
         $rendered = $this->render(
@@ -213,7 +217,7 @@ class IndexTest extends TestCase
     /**
      * @return array<string, array{string, string}>
      */
-    public function mimeTypeProvider(): array
+    public static function mimeTypeProvider(): array
     {
         return [
             'png' => ['diagram.png', 'image/png'],

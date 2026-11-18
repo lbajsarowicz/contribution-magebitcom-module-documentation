@@ -17,6 +17,7 @@ use Magebit\Documentation\Model\Data\ModuleDocs;
 use Magebit\Documentation\Model\Data\Page;
 use Magebit\Documentation\Model\Data\Section;
 use Magento\Framework\App\RequestInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class CurrentPageTest extends TestCase
@@ -38,6 +39,7 @@ class CurrentPageTest extends TestCase
      * @return void
      * @dataProvider incompleteParamsProvider
      */
+    #[DataProvider('incompleteParamsProvider')]
     public function testFallsBackToTheFirstPageTheAdminMaySee(array $params): void
     {
         $this->assertSame(
@@ -49,7 +51,7 @@ class CurrentPageTest extends TestCase
     /**
      * @return array<string, array{array<string, string>}>
      */
-    public function incompleteParamsProvider(): array
+    public static function incompleteParamsProvider(): array
     {
         return [
             'nothing asked for' => [[]],

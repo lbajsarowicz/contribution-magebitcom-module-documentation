@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Magebit\Documentation\Test\Unit\Model\Scanner;
 
 use Magebit\Documentation\Model\Scanner\FileNameParser;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class FileNameParserTest extends TestCase
@@ -31,6 +32,7 @@ class FileNameParserTest extends TestCase
      * @return void
      * @dataProvider fileNameProvider
      */
+    #[DataProvider('fileNameProvider')]
     public function testParse(string $fileName, array $expected): void
     {
         $this->assertSame($expected, $this->parser->parse($fileName));
